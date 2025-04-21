@@ -3,7 +3,7 @@
 ## Youtube Link for Code Explanation
 ( https://youtu.be/bOjckVa_9jY )
 
-# Youtube Link for Checkpoint
+## Youtube Link for Checkpoint
 ( https://youtu.be/m8rmby8Zvt8 )
 
 ## Overleaf Paper Link
