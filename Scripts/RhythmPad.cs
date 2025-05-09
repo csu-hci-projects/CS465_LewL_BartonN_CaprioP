@@ -48,11 +48,14 @@ public class RhythmPad : MonoBehaviour
 
         float hitTime = Time.time - BeatManager.startTime;
         float[] beatTimes = BeatManager.beatTimes;
-
-        if (beatIndex >= beatTimes.Length)
-        {
-            resultText.text = "No beats left!";
-            return;
+        
+        //Find the beat Index dynamically (prevent spam from messing with it)
+        //Set beatIndex depending on which beat is currently coming
+        beatIndex = 0;
+        for(int i = 0; i < beatTimes.Length; i++) {
+            if(beatTimes[i] < hitTime - 0.1f) {
+                beatIndex = i + 1;
+            }
         }
 
         float expectedTime = beatTimes[beatIndex];
@@ -80,10 +83,12 @@ public class RhythmPad : MonoBehaviour
         // Log the hit
         logLines.Add($"{currentTrialNumber},{currentModality},{currentTempo},{beatIndex + 1},{expectedTime:F3},{hitTime:F3},{offset:F3},{isGoodHit}");
 
-        beatIndex++;
+        // beatIndex++;
 
-        if (beatIndex >= beatTimes.Length)
+        if (beatIndex >= beatTimes.Length - 1)
         {
+            resultText.text = "No beats left!";
+
             trialFinished = true;
             ShowFinalScore();
             SaveCSV();
@@ -141,11 +146,11 @@ public class RhythmPad : MonoBehaviour
                 }
             }
 
-            Debug.Log($"✅ Trial data saved to: {filePath}");
+            Debug.Log($"Trial data saved to: {filePath}");
         }
         catch (Exception ex)
         {
-            Debug.LogError($"❌ Failed to write CSV: {ex.Message}");
+            Debug.LogError($"Failed to write CSV: {ex.Message}");
         }
     }
 

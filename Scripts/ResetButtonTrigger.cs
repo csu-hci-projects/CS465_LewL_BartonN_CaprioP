@@ -8,7 +8,7 @@ public class ResetButtonTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PokeTip"))
+        if (other.CompareTag("PokeTip") && trialManager.GetIsTrialRunning())
         {
             Debug.Log("Reset button pressed.");
             trialManager.ResetTrial();

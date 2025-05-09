@@ -19,7 +19,7 @@ public class BeatSpawner : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("🟢 BeatSpawner.Start() ran");
+        Debug.Log("BeatSpawner.Start() ran");
         isActive = false;
         startTime = BeatManager.startTime;
     }
@@ -40,12 +40,13 @@ public class BeatSpawner : MonoBehaviour
                 MoveToTarget cueScript = cue.GetComponent<MoveToTarget>();
                 if (cueScript != null)
                 {
-                    cueScript.Init(targetPoint.position, travelTime, enableAudio ? metronomeSource : null);
+                    cueScript.Init(targetPoint.position, travelTime - 0.2f, enableAudio ? metronomeSource : null);
                 }
             }
-            else if (enableAudio && metronomeSource != null)
+            if (enableAudio && metronomeSource != null)
             {
                 metronomeSource.Play();
+                Debug.Log("Metronome Played Beat");
             }
 
             Debug.Log($"Spawned beat #{index + 1} at {currentTime:F2}s (Arrives at {BeatManager.beatTimes[index]}s)");

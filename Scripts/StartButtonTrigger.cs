@@ -8,7 +8,7 @@ public class StartButtonTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PokeTip"))
+        if (other.CompareTag("PokeTip") && !trialManager.GetIsTrialRunning())
         {
             Debug.Log("Start button pressed.");
             trialManager.StartTrial();

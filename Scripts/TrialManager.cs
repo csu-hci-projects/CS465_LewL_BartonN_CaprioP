@@ -20,9 +20,9 @@ public class TrialManager : MonoBehaviour
     {
         trialStarted = true;
 
-        string[] modalities = { "Audio Only", "Visual Only", "Audio + Visual" };
+        string[] modalities = { "Audio + Visual", "Visual Only", "Audio Only" };
         bool[] audioModes =  { true, false, true };
-        bool[] visualModes = { false, true, true };
+        bool[] visualModes = { true, true, false };
 
         float[] tempos = { 1.15f, 0.75f }; // Two tempos
         int totalBeats = 12;
@@ -38,6 +38,7 @@ public class TrialManager : MonoBehaviour
                 bool useVisual = visualModes[m];
 
                 countdownText.text = $"Trial {t * 3 + m + 1}: {label} @ {tempo:0.00}s/beat";
+                
                 yield return new WaitForSeconds(2f);
 
                 BeatManager.GenerateBeatTimes(firstBeatAt, tempo, totalBeats);
@@ -46,6 +47,9 @@ public class TrialManager : MonoBehaviour
                 spawner.enableVisual = useVisual;
 
                 bool clickIn = useAudio;
+
+                rhythmPad.SetTrialInfo(m, modalities[m], tempos[t]);               
+
                 yield return StartCoroutine(CountdownRoutine(clickIn, tempo));
 
                 spawner.ResetBeats();
@@ -93,5 +97,9 @@ public class TrialManager : MonoBehaviour
         trialStarted = false;
         countdownText.text = "Trial restarting...";
         Debug.Log("Trial reset.");
+    }
+    
+    public bool GetIsTrialRunning() {
+        return trialStarted;
     }
 }
